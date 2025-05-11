@@ -52,7 +52,7 @@ class OrderProcessorTest {
         pointsMethod = new PointsMethod(new BigDecimal("0.20"), new BigDecimal("200.00"));
 
         // Create wallet with cards and points
-        wallet = new Wallet(Arrays.asList(card1, card2), pointsMethod);
+        wallet = Wallet.createWithCards(Arrays.asList(card1, card2), pointsMethod);
 
         // Create promotion rules
         rules = new ArrayList<>();
@@ -88,7 +88,7 @@ class OrderProcessorTest {
         // Assert
         assertNotNull(result);
         assertEquals(3, result.size());
-        
+
         // Debug logging
         System.out.println("[DEBUG_LOG] Final allocations size: " + result.size());
         for (int i = 0; i < result.size(); i++) {
@@ -107,7 +107,7 @@ class OrderProcessorTest {
         BigDecimal initialPointsLimit = wallet.totalRemainingPoints();
         BigDecimal initialCard1Limit = card1.getRemainingLimit();
         BigDecimal initialCard2Limit = card2.getRemainingLimit();
-        
+
         System.out.println("[DEBUG_LOG] Initial points limit: " + initialPointsLimit);
         System.out.println("[DEBUG_LOG] Initial card1 limit: " + initialCard1Limit);
         System.out.println("[DEBUG_LOG] Initial card2 limit: " + initialCard2Limit);
@@ -119,11 +119,11 @@ class OrderProcessorTest {
         BigDecimal finalPointsLimit = wallet.totalRemainingPoints();
         BigDecimal finalCard1Limit = card1.getRemainingLimit();
         BigDecimal finalCard2Limit = card2.getRemainingLimit();
-        
+
         System.out.println("[DEBUG_LOG] Final points limit: " + finalPointsLimit);
         System.out.println("[DEBUG_LOG] Final card1 limit: " + finalCard1Limit);
         System.out.println("[DEBUG_LOG] Final card2 limit: " + finalCard2Limit);
-        
+
         // Verify that funds were deducted
         assertTrue(finalPointsLimit.compareTo(initialPointsLimit) < 0 || 
                   finalCard1Limit.compareTo(initialCard1Limit) < 0 || 
@@ -167,7 +167,7 @@ class OrderProcessorTest {
         // Assert
         assertNotNull(finalAllocations);
         assertEquals(3, finalAllocations.size());
-        
+
         // Verify that the final allocations match the orders
         for (int i = 0; i < orders.size(); i++) {
             assertEquals(orders.get(i).getId(), finalAllocations.get(i).getOrder().getId());

@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.order.Wallet;
 import org.example.payment.CardMethod;
+import org.example.payment.PaymentMethod;
 import org.example.payment.PointsMethod;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,7 @@ class WalletTest {
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("300.00"));
 
         // Act
-        Wallet wallet = new Wallet(cardMethods, pointsMethod);
+        Wallet wallet = Wallet.createWithCards(cardMethods, pointsMethod);
 
         // Assert
         assertEquals(cardMethods, wallet.getCardMethods());
@@ -39,9 +40,10 @@ class WalletTest {
     void constructorShouldHandleNullCardMethods() {
         // Arrange
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("300.00"));
+        List<CardMethod> nullCardMethods = null;
 
         // Act
-        Wallet wallet = new Wallet(null, pointsMethod);
+        Wallet wallet = Wallet.createWithCards(nullCardMethods, pointsMethod);
 
         // Assert
         assertNotNull(wallet.getCardMethods());
@@ -56,7 +58,7 @@ class WalletTest {
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("300.00"));
-        Wallet wallet = new Wallet(cardMethods, pointsMethod);
+        Wallet wallet = Wallet.createWithCards(cardMethods, pointsMethod);
 
         // Act & Assert
         assertThrows(UnsupportedOperationException.class, () -> {
@@ -72,7 +74,7 @@ class WalletTest {
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
         cardMethods.add(new CardMethod("card2", new BigDecimal("0.05"), new BigDecimal("500.00")));
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("300.00"));
-        Wallet wallet = new Wallet(cardMethods, pointsMethod);
+        Wallet wallet = Wallet.createWithCards(cardMethods, pointsMethod);
         BigDecimal expectedTotal = new BigDecimal("1500.00");
 
         // Act
@@ -87,7 +89,8 @@ class WalletTest {
     void totalRemainingCardLimitShouldReturnZeroForEmptyCardMethods() {
         // Arrange
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("300.00"));
-        Wallet wallet = new Wallet(Collections.emptyList(), pointsMethod);
+        List<CardMethod> emptyCardMethods = Collections.emptyList();
+        Wallet wallet = Wallet.createWithCards(emptyCardMethods, pointsMethod);
 
         // Act
         BigDecimal actualTotal = wallet.totalRemainingCardLimit();
@@ -104,7 +107,7 @@ class WalletTest {
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
         BigDecimal pointsLimit = new BigDecimal("300.00");
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), pointsLimit);
-        Wallet wallet = new Wallet(cardMethods, pointsMethod);
+        Wallet wallet = Wallet.createWithCards(cardMethods, pointsMethod);
 
         // Act
         BigDecimal actualPoints = wallet.totalRemainingPoints();
@@ -119,7 +122,7 @@ class WalletTest {
         // Arrange
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
-        Wallet wallet = new Wallet(cardMethods, null);
+        Wallet wallet = Wallet.createWithCards(cardMethods, null);
 
         // Act
         BigDecimal actualPoints = wallet.totalRemainingPoints();

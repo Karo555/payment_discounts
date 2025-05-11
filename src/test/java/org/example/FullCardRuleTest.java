@@ -127,7 +127,7 @@ class FullCardRuleTest {
         // Create a wallet with a card that has insufficient limit (50.00 < 100.00)
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod(cardMethodId, new BigDecimal("0.10"), new BigDecimal("50.00")));
-        Wallet wallet = new Wallet(cardMethods, null);
+        Wallet wallet = Wallet.createWithCards(cardMethods, null);
 
         PaymentScenario baseScenario = createBaseScenario(order);
 
@@ -194,7 +194,7 @@ class FullCardRuleTest {
     private Wallet createWalletWithCard(String cardId) {
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod(cardId, new BigDecimal("0.10"), new BigDecimal("1000.00")));
-        return new Wallet(cardMethods, null);
+        return Wallet.createWithCards(cardMethods, null);
     }
 
     private PaymentScenario createBaseScenario(Order order) {

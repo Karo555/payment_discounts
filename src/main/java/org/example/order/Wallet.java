@@ -1,45 +1,71 @@
 package org.example.order;
 
 import org.example.payment.CardMethod;
+import org.example.payment.PaymentMethod;
 import org.example.payment.PointsMethod;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Aggregates all of a customer's payment methods and exposes global limits.
  */
 public class Wallet {
-    private final List<CardMethod> cardMethods;
-    private final PointsMethod pointsMethod;
+    private final List<PaymentMethod> paymentMethods;
+    private final PaymentMethod pointsMethod;
 
     /**
      * Constructor for Wallet.
      *
-     * @param cardMethods The list of card payment methods
+     * @param paymentMethods The list of payment methods
      * @param pointsMethod The points payment method
      */
-    public Wallet(List<CardMethod> cardMethods, PointsMethod pointsMethod) {
-        this.cardMethods = cardMethods != null ? 
-            Collections.unmodifiableList(new ArrayList<>(cardMethods)) : 
+    public Wallet(List<PaymentMethod> paymentMethods, PaymentMethod pointsMethod) {
+        this.paymentMethods = paymentMethods != null ? 
+            Collections.unmodifiableList(new ArrayList<>(paymentMethods)) : 
             Collections.emptyList();
         this.pointsMethod = pointsMethod;
+    }
+
+    /**
+     * Static factory method for creating a wallet with card methods.
+     *
+     * @param cardMethods The list of card payment methods
+     * @param pointsMethod The points payment method
+     * @return A new Wallet instance
+     */
+    public static Wallet createWithCards(List<CardMethod> cardMethods, PointsMethod pointsMethod) {
+        return new Wallet(cardMethods != null ? 
+            new ArrayList<>(cardMethods.stream().map(card -> (PaymentMethod) card).collect(Collectors.toList())) : 
+            null, 
+            pointsMethod);
     }
 
     /**
      * @return The list of card payment methods
      */
     public List<CardMethod> getCardMethods() {
-        return cardMethods;
+        return paymentMethods.stream()
+            .filter(PaymentMethod::isCard)
+            .map(method -> (CardMethod) method)
+            .collect(Collectors.toList());
     }
 
     /**
      * @return The points payment method
      */
     public PointsMethod getPointsMethod() {
-        return pointsMethod;
+        return (PointsMethod) pointsMethod;
+    }
+
+    /**
+     * @return The list of all payment methods
+     */
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
     }
 
     /**
@@ -49,8 +75,10 @@ public class Wallet {
      */
     public BigDecimal totalRemainingCardLimit() {
         BigDecimal total = BigDecimal.ZERO;
-        for (CardMethod cardMethod : cardMethods) {
-            total = total.add(cardMethod.getRemainingLimit());
+        for (PaymentMethod method : paymentMethods) {
+            if (method.isCard()) {
+                total = total.add(method.getRemainingLimit());
+            }
         }
         return total;
     }

@@ -152,19 +152,19 @@ class FullPointsRuleTest {
     private Wallet createWalletWithSufficientPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("200.00"));
-        return new Wallet(cardMethods, pointsMethod);
+        return Wallet.createWithCards(cardMethods, pointsMethod);
     }
 
     private Wallet createWalletWithInsufficientPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("50.00"));
-        return new Wallet(cardMethods, pointsMethod);
+        return Wallet.createWithCards(cardMethods, pointsMethod);
     }
 
     private Wallet createWalletWithoutPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
-        return new Wallet(cardMethods, null);
+        return Wallet.createWithCards(cardMethods, null);
     }
 
     private PaymentScenario createBaseScenario(Order order) {

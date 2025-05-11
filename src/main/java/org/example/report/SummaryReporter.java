@@ -2,6 +2,7 @@ package org.example.report;
 
 import org.example.order.PaymentScenario;
 import org.example.payment.CardMethod;
+import org.example.payment.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -99,7 +100,11 @@ public class SummaryReporter {
      * @return The card method, or null if not available
      */
     private CardMethod getCardMethod(PaymentScenario scenario) {
-        return scenario.getCardMethod();
+        PaymentMethod method = scenario.getCardMethod();
+        if (method != null && method.isCard()) {
+            return (CardMethod) method;
+        }
+        return null;
     }
 
     /**

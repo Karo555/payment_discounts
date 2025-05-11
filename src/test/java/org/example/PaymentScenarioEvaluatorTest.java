@@ -5,6 +5,7 @@ import org.example.order.PaymentScenario;
 import org.example.order.PaymentScenarioEvaluator;
 import org.example.order.Wallet;
 import org.example.payment.CardMethod;
+import org.example.payment.PaymentMethod;
 import org.example.payment.PointsMethod;
 import org.example.promotion.FullCardRule;
 import org.example.promotion.FullPointsRule;
@@ -49,7 +50,8 @@ class PaymentScenarioEvaluatorTest {
         pointsMethod = new PointsMethod(new BigDecimal("0.20"), new BigDecimal("200.00"));
 
         // Create wallet with cards and points
-        wallet = new Wallet(Arrays.asList(card1, card2), pointsMethod);
+        List<CardMethod> cardMethods = Arrays.asList(card1, card2);
+        wallet = Wallet.createWithCards(cardMethods, pointsMethod);
 
         // Create order with eligible promotions
         Set<String> eligiblePromos = new HashSet<>(Arrays.asList("card1", "card2"));
@@ -118,7 +120,7 @@ class PaymentScenarioEvaluatorTest {
     void shouldPreferPointsOverCardWhenDiscountIsEqual() {
         // Arrange: Create a scenario where points and card give the same discount
         CardMethod equalCard = new CardMethod("equalCard", new BigDecimal("0.20"), new BigDecimal("1000.00"));
-        Wallet equalWallet = new Wallet(Collections.singletonList(equalCard), pointsMethod);
+        Wallet equalWallet = Wallet.createWithCards(Collections.singletonList(equalCard), pointsMethod);
         Order smallOrder = new Order("small123", new BigDecimal("150.00"), 
                                     new HashSet<>(Collections.singletonList("equalCard")));
         List<PromotionRule> equalRules = Arrays.asList(new FullCardRule("equalCard"), new FullPointsRule());
@@ -157,7 +159,7 @@ class PaymentScenarioEvaluatorTest {
     void shouldThrowExceptionWhenNoValidPaymentScenariosAreFound() {
         // Arrange: Order value is more than available payment methods
         Order hugeOrder = new Order("huge123", new BigDecimal("2000.00"), Collections.emptySet());
-        Wallet emptyWallet = new Wallet(Collections.emptyList(), null);
+        Wallet emptyWallet = Wallet.createWithCards(Collections.emptyList(), null);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, 
