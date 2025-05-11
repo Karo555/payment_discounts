@@ -1,5 +1,10 @@
 package org.example;
 
+import org.example.order.Order;
+import org.example.order.Wallet;
+import org.example.order.PaymentScenario;
+import org.example.payment.CardMethod;
+import org.example.promotion.FullCardRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import java.math.BigDecimal;

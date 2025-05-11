@@ -1,4 +1,8 @@
-package org.example;
+package org.example.promotion;
+
+import org.example.order.Order;
+import org.example.order.PaymentScenario;
+import org.example.order.Wallet;
 
 import java.math.BigDecimal;
 

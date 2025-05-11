@@ -1,12 +1,17 @@
 package org.example;
 
+import org.example.order.Wallet;
+import org.example.payment.CardMethod;
+import org.example.payment.PointsMethod;
+import org.example.promotion.FullPointsRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
+import org.example.order.Order;
+import org.example.order.PaymentScenario;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

@@ -1,4 +1,6 @@
-package org.example;
+package org.example.order;
+
+import org.example.payment.CardMethod;
 
 import java.math.BigDecimal;
 

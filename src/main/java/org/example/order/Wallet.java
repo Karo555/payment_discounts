@@ -1,4 +1,7 @@
-package org.example;
+package org.example.order;
+
+import org.example.payment.CardMethod;
+import org.example.payment.PointsMethod;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

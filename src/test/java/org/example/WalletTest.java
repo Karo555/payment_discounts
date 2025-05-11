@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.order.Wallet;
+import org.example.payment.CardMethod;
+import org.example.payment.PointsMethod;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import java.math.BigDecimal;
