@@ -1,6 +1,9 @@
-package org.example;
+package org.example.promotion;
 
 import java.math.BigDecimal;
+import org.example.order.Order;
+import org.example.order.Wallet;
+import org.example.order.PaymentScenario;
 
 /**
  * Interface for promotion rules that determine if a promotion is applicable

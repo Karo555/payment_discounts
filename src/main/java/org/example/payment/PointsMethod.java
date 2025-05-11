@@ -1,31 +1,29 @@
-package org.example;
+package org.example.payment;
 
 import java.math.BigDecimal;
 
 /**
- * Represents a card payment method.
+ * Represents a points payment method.
  */
-public class CardMethod implements PaymentMethod {
-    private final String id;
+public class PointsMethod implements PaymentMethod {
+    private static final String POINTS_ID = "POINTS";
     private final BigDecimal discountPercent;
     private BigDecimal remainingLimit;
 
     /**
-     * Constructor for CardMethod.
+     * Constructor for PointsMethod.
      *
-     * @param id The card method ID (e.g. "mZysk")
-     * @param discountPercent The discount percentage for this card
-     * @param remainingLimit The remaining limit available for this card
+     * @param discountPercent The full-points discount percentage
+     * @param remainingLimit The available points-converted value
      */
-    public CardMethod(String id, BigDecimal discountPercent, BigDecimal remainingLimit) {
-        this.id = id;
+    public PointsMethod(BigDecimal discountPercent, BigDecimal remainingLimit) {
         this.discountPercent = discountPercent;
         this.remainingLimit = remainingLimit;
     }
 
     @Override
     public String getId() {
-        return id;
+        return POINTS_ID;
     }
 
     @Override
@@ -43,17 +41,17 @@ public class CardMethod implements PaymentMethod {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Amount must be non-negative");
         }
-        
+
         BigDecimal newLimit = remainingLimit.subtract(amount);
         if (newLimit.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Insufficient limit available");
+            throw new IllegalArgumentException("Insufficient points available");
         }
-        
+
         this.remainingLimit = newLimit;
     }
 
     @Override
     public boolean isCard() {
-        return true;
+        return false;
     }
 }
