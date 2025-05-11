@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Represents a points payment method.
  */
 public class PointsMethod implements PaymentMethod {
-    private static final String POINTS_ID = "POINTS";
+    private static final String POINTS_ID = "PUNKTY";
     private final BigDecimal discountPercent;
     private BigDecimal remainingLimit;
 

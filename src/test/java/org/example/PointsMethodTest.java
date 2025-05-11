@@ -23,7 +23,7 @@ class PointsMethodTest {
         PointsMethod pointsMethod = new PointsMethod(discountPercent, remainingLimit);
 
         // Assert
-        assertEquals("POINTS", pointsMethod.getId());
+        assertEquals("PUNKTY", pointsMethod.getId());
         assertEquals(discountPercent, pointsMethod.getDiscountPercent());
         assertEquals(remainingLimit, pointsMethod.getRemainingLimit());
         assertFalse(pointsMethod.isCard());
