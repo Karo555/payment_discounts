@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="org.example.PaymentScenarioEvaluatorTest" time="0.01" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="org.example.PaymentScenarioEvaluatorTest" time="0.007" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire/surefirebooter-20250511193347548_3.jar /Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire 2025-05-11T19-33-47_493-jvmRun1 surefire-20250511193347548_1tmp surefire_0-20250511193347548_2tmp"/>
+    <property name="sun.java.command" value="/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire/surefirebooter-20250511203539519_3.jar /Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire 2025-05-11T20-35-39_471-jvmRun1 surefire-20250511203539519_1tmp surefire_0-20250511203539519_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/test-classes:/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/classes:/Users/karolinanowacka/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar:/Users/karolinanowacka/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar:/Users/karolinanowacka/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar:/Users/karolinanowacka/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar:/Users/karolinanowacka/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/karolinanowacka/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/Users/karolinanowacka/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/karolinanowacka/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar:/Users/karolinanowacka/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:/Users/karolinanowacka/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.0/junit-jupiter-params-5.10.0.jar:"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire/surefirebooter-20250511193347548_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/karolinanowacka/IdeaProjects/ocado_internship_25/target/surefire/surefirebooter-20250511203539519_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="23.0.2"/>
@@ -58,7 +58,7 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="shouldPreferFullPointsPaymentWhenItGivesHighestDiscount" classname="org.example.PaymentScenarioEvaluatorTest" time="0.001">
+  <testcase name="shouldPreferFullPointsPaymentWhenItGivesHighestDiscount" classname="org.example.PaymentScenarioEvaluatorTest" time="0.0">
     <system-out><![CDATA[[DEBUG] Generating valid payment scenarios for order: small123
 [DEBUG] Adding full points scenario for order: small123
 [DEBUG] Adding full card scenario for order: small123 with card: card1
@@ -84,7 +84,7 @@
 [DEBUG] Generated 0 valid payment scenarios for order: huge123
 ]]></system-out>
   </testcase>
-  <testcase name="shouldPreferCardWithHighestDiscountWhenPointsAreInsufficient" classname="org.example.PaymentScenarioEvaluatorTest" time="0.002">
+  <testcase name="shouldPreferCardWithHighestDiscountWhenPointsAreInsufficient" classname="org.example.PaymentScenarioEvaluatorTest" time="0.001">
     <system-out><![CDATA[[DEBUG_LOG] Card1 discount: 0.10
 [DEBUG_LOG] Card2 discount: 0.15
 [DEBUG] Generating valid payment scenarios for order: large123
@@ -121,8 +121,8 @@
 [DEBUG] Generated 4 valid payment scenarios for order: medium123
 ]]></system-out>
   </testcase>
-  <testcase name="shouldThrowExceptionWhenParametersAreNull" classname="org.example.PaymentScenarioEvaluatorTest" time="0.002"/>
-  <testcase name="shouldPreferPointsOverCardWhenDiscountIsEqual" classname="org.example.PaymentScenarioEvaluatorTest" time="0.001">
+  <testcase name="shouldThrowExceptionWhenParametersAreNull" classname="org.example.PaymentScenarioEvaluatorTest" time="0.0"/>
+  <testcase name="shouldPreferPointsOverCardWhenDiscountIsEqual" classname="org.example.PaymentScenarioEvaluatorTest" time="0.0">
     <system-out><![CDATA[[DEBUG] Generating valid payment scenarios for order: small123
 [DEBUG] Adding full points scenario for order: small123
 [DEBUG] Adding full card scenario for order: small123 with card: equalCard

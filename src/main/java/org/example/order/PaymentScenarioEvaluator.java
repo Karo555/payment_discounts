@@ -125,7 +125,12 @@ public class PaymentScenarioEvaluator {
     private PaymentScenario createFullPointsScenario(Order order, Wallet wallet) {
         BigDecimal orderValue = order.getValue();
         PointsMethod pointsMethod = wallet.getPointsMethod();
-        BigDecimal discount = orderValue.multiply(pointsMethod.getDiscountPercent());
+        BigDecimal discountPercent = pointsMethod.getDiscountPercent();
+        // Check if the discount percent is already in decimal form (less than 1) or needs conversion
+        if (discountPercent.compareTo(BigDecimal.ONE) >= 0) {
+            discountPercent = discountPercent.divide(new BigDecimal("100"));
+        }
+        BigDecimal discount = orderValue.multiply(discountPercent);
         return new PaymentScenario(order, null, pointsMethod, orderValue, BigDecimal.ZERO, discount);
     }
 
@@ -138,7 +143,12 @@ public class PaymentScenarioEvaluator {
      */
     private PaymentScenario createFullCardScenario(Order order, CardMethod cardMethod) {
         BigDecimal orderValue = order.getValue();
-        BigDecimal discount = orderValue.multiply(cardMethod.getDiscountPercent());
+        BigDecimal discountPercent = cardMethod.getDiscountPercent();
+        // Check if the discount percent is already in decimal form (less than 1) or needs conversion
+        if (discountPercent.compareTo(BigDecimal.ONE) >= 0) {
+            discountPercent = discountPercent.divide(new BigDecimal("100"));
+        }
+        BigDecimal discount = orderValue.multiply(discountPercent);
         return new PaymentScenario(order, cardMethod, null, BigDecimal.ZERO, orderValue, discount);
     }
 
@@ -165,7 +175,12 @@ public class PaymentScenarioEvaluator {
         } else {
             // If less than 10% of the order is paid with points, no special discount applies
             // Just use the card discount
-            BigDecimal cardDiscount = cardAmount.multiply(cardMethod.getDiscountPercent());
+            BigDecimal discountPercent = cardMethod.getDiscountPercent();
+            // Check if the discount percent is already in decimal form (less than 1) or needs conversion
+            if (discountPercent.compareTo(BigDecimal.ONE) >= 0) {
+                discountPercent = discountPercent.divide(new BigDecimal("100"));
+            }
+            BigDecimal cardDiscount = cardAmount.multiply(discountPercent);
             return new PaymentScenario(order, cardMethod, wallet.getPointsMethod(), pointsAmount, cardAmount, cardDiscount);
         }
     }

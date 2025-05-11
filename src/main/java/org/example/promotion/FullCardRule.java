@@ -28,11 +28,11 @@ public class FullCardRule implements PromotionRule {
         // 1. The order has a card promotion for this card method
         // 2. The wallet contains a card method with this ID
         // 3. The base scenario doesn't already use a card
-        
+
         if (!o.hasCardPromotion(cardMethodId) || base.usesCard()) {
             return false;
         }
-        
+
         // Check if the wallet contains a card with this ID
         for (CardMethod card : w.getCardMethods()) {
             if (card.getId().equals(cardMethodId)) {
@@ -40,7 +40,7 @@ public class FullCardRule implements PromotionRule {
                 return card.getRemainingLimit().compareTo(o.getValue()) >= 0;
             }
         }
-        
+
         return false;
     }
 
@@ -49,15 +49,20 @@ public class FullCardRule implements PromotionRule {
         if (!isApplicable(o, w, base)) {
             return BigDecimal.ZERO;
         }
-        
+
         // Find the card method with the matching ID
         for (CardMethod card : w.getCardMethods()) {
             if (card.getId().equals(cardMethodId)) {
                 // Apply the discount percentage from the card
-                return o.getValue().multiply(card.getDiscountPercent());
+                BigDecimal discountPercent = card.getDiscountPercent();
+                // Check if the discount percent is already in decimal form (less than 1) or needs conversion
+                if (discountPercent.compareTo(BigDecimal.ONE) >= 0) {
+                    discountPercent = discountPercent.divide(new BigDecimal("100"));
+                }
+                return o.getValue().multiply(discountPercent);
             }
         }
-        
+
         return BigDecimal.ZERO;
     }
 }

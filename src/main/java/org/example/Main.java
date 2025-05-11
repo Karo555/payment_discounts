@@ -58,7 +58,7 @@ public class Main {
             List<PromotionRule> rules = new ArrayList<>();
             rules.add(new FullPointsRule());
             rules.add(new PartialPointsRule());
-            rules.add(new DefaultRule());
+            // DefaultRule removed to prevent pure-cash pattern generation
 
             // Add a FullCardRule for each card method in the wallet
             for (PaymentMethod method : paymentMethods) {

@@ -24,11 +24,11 @@ public class FullPointsRule implements PromotionRule {
         // 1. The wallet has a points method
         // 2. The points method has sufficient limit to cover the entire order
         // 3. The base scenario doesn't already use points
-        
+
         if (w.getPointsMethod() == null || base.usesPoints()) {
             return false;
         }
-        
+
         // Check if there are enough points to cover the order
         return w.getPointsMethod().getRemainingLimit().compareTo(o.getValue()) >= 0;
     }
@@ -38,8 +38,13 @@ public class FullPointsRule implements PromotionRule {
         if (!isApplicable(o, w, base)) {
             return BigDecimal.ZERO;
         }
-        
+
         // Apply the discount percentage from the points method
-        return o.getValue().multiply(w.getPointsMethod().getDiscountPercent());
+        BigDecimal discountPercent = w.getPointsMethod().getDiscountPercent();
+        // Check if the discount percent is already in decimal form (less than 1) or needs conversion
+        if (discountPercent.compareTo(BigDecimal.ONE) >= 0) {
+            discountPercent = discountPercent.divide(new BigDecimal("100"));
+        }
+        return o.getValue().multiply(discountPercent);
     }
 }
