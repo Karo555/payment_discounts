@@ -3,10 +3,13 @@ package org.example.order;
 import org.example.payment.CardMethod;
 import org.example.payment.PointsMethod;
 import org.example.promotion.PromotionRule;
+import org.example.report.SummaryReporter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Processes orders by assigning optimal payment methods and updating the wallet.
@@ -16,6 +19,8 @@ public class OrderProcessor {
     private final PaymentScenarioEvaluator evaluator;
     private final List<PromotionRule> rules;
     private final List<PaymentScenario> finalAllocations;
+    private final Map<String, BigDecimal> paymentTotals;
+    private final SummaryReporter summaryReporter;
 
     /**
      * Constructor for OrderProcessor.
@@ -30,6 +35,8 @@ public class OrderProcessor {
         this.evaluator = evaluator;
         this.rules = rules;
         this.finalAllocations = new ArrayList<>();
+        this.paymentTotals = new HashMap<>();
+        this.summaryReporter = new SummaryReporter();
     }
 
     /**
@@ -44,8 +51,9 @@ public class OrderProcessor {
             throw new IllegalArgumentException("Orders and wallet cannot be null");
         }
 
-        // Clear previous allocations
+        // Clear previous allocations and payment totals
         finalAllocations.clear();
+        paymentTotals.clear();
 
         // Process each order
         for (Order order : orders) {
@@ -63,6 +71,9 @@ public class OrderProcessor {
                 System.err.println("Error processing order " + order.getId() + ": " + e.getMessage());
             }
         }
+
+        // Print the payment summary
+        summaryReporter.printPaymentSummary(finalAllocations);
 
         return finalAllocations;
     }

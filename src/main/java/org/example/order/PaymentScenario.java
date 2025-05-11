@@ -63,4 +63,25 @@ public class PaymentScenario {
     public BigDecimal getDiscountValue() {
         return discountValue;
     }
+
+    /**
+     * @return The card method used (null if no card used)
+     */
+    public CardMethod getCardMethod() {
+        return cardMethod;
+    }
+
+    /**
+     * @return The amount of points used (zero if none)
+     */
+    public BigDecimal getPointsUsed() {
+        return pointsUsed;
+    }
+
+    /**
+     * @return The amount charged to the card (zero if none)
+     */
+    public BigDecimal getCardCharge() {
+        return cardCharge;
+    }
 }
