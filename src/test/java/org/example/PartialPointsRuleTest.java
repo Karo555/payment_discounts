@@ -19,12 +19,12 @@ class PartialPointsRuleTest {
     void constructorShouldInitializeCorrectly() {
         // Act
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         // Assert - We can only test this indirectly through behavior
         Order order = createOrder();
         Wallet wallet = createWalletWithPartialPoints();
         PaymentScenario baseScenario = createBaseScenario(order);
-        
+
         assertTrue(rule.isApplicable(order, wallet, baseScenario));
     }
 
@@ -33,7 +33,7 @@ class PartialPointsRuleTest {
     void isApplicableShouldReturnTrueWhenAllConditionsAreMet() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder(); // Order value is 100.00
         Wallet wallet = createWalletWithPartialPoints(); // Points limit is 50.00
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -50,7 +50,7 @@ class PartialPointsRuleTest {
     void isApplicableShouldReturnFalseWhenWalletHasNoPointsMethod() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder();
         Wallet wallet = createWalletWithoutPoints();
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -67,7 +67,7 @@ class PartialPointsRuleTest {
     void isApplicableShouldReturnFalseWhenPointsAreZero() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder();
         Wallet wallet = createWalletWithZeroPoints();
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -84,7 +84,7 @@ class PartialPointsRuleTest {
     void isApplicableShouldReturnFalseWhenPointsAreSufficientForFullPayment() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder(); // Order value is 100.00
         Wallet wallet = createWalletWithSufficientPoints(); // Points limit is 200.00
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -101,10 +101,10 @@ class PartialPointsRuleTest {
     void isApplicableShouldReturnFalseWhenBaseScenarioAlreadyUsesPoints() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder();
         Wallet wallet = createWalletWithPartialPoints();
-        
+
         // Create a base scenario that already uses points
         PaymentScenario baseScenario = new PaymentScenario(order, null, new BigDecimal("25.00"), 
                                                           BigDecimal.ZERO, BigDecimal.ZERO);
@@ -121,11 +121,11 @@ class PartialPointsRuleTest {
     void computeDiscountShouldCalculateDiscountCorrectlyWhenApplicable() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder(); // Order value is 100.00
         Wallet wallet = createWalletWithPartialPoints(); // Points limit is 50.00, discount is 0.15
         PaymentScenario baseScenario = createBaseScenario(order);
-        
+
         // Expected discount: 50.00 * 0.15 = 7.50
         BigDecimal expectedDiscount = new BigDecimal("7.50");
 
@@ -133,7 +133,9 @@ class PartialPointsRuleTest {
         BigDecimal actualDiscount = rule.computeDiscount(order, wallet, baseScenario);
 
         // Assert
-        assertEquals(expectedDiscount, actualDiscount);
+        // Use compareTo for BigDecimal comparison to ignore scale differences
+        assertEquals(0, expectedDiscount.compareTo(actualDiscount), 
+                    "Expected discount " + expectedDiscount + " but got " + actualDiscount);
     }
 
     @Test
@@ -141,7 +143,7 @@ class PartialPointsRuleTest {
     void computeDiscountShouldReturnZeroWhenNotApplicable() {
         // Arrange
         PartialPointsRule rule = new PartialPointsRule();
-        
+
         Order order = createOrder();
         Wallet wallet = createWalletWithoutPoints();
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -154,35 +156,35 @@ class PartialPointsRuleTest {
     }
 
     // Helper methods to create test objects
-    
+
     private Order createOrder() {
         return new Order("order123", new BigDecimal("100.00"), new HashSet<>());
     }
-    
+
     private Wallet createWalletWithPartialPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("50.00"));
         return new Wallet(cardMethods, pointsMethod);
     }
-    
+
     private Wallet createWalletWithSufficientPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), new BigDecimal("200.00"));
         return new Wallet(cardMethods, pointsMethod);
     }
-    
+
     private Wallet createWalletWithZeroPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         PointsMethod pointsMethod = new PointsMethod(new BigDecimal("0.15"), BigDecimal.ZERO);
         return new Wallet(cardMethods, pointsMethod);
     }
-    
+
     private Wallet createWalletWithoutPoints() {
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod("card1", new BigDecimal("0.10"), new BigDecimal("1000.00")));
         return new Wallet(cardMethods, null);
     }
-    
+
     private PaymentScenario createBaseScenario(Order order) {
         return new PaymentScenario(order, null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
     }

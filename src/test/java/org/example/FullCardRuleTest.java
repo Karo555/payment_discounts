@@ -28,7 +28,7 @@ class FullCardRuleTest {
         Order order = createOrderWithPromo(cardMethodId);
         Wallet wallet = createWalletWithCard(cardMethodId);
         PaymentScenario baseScenario = createBaseScenario(order);
-        
+
         assertTrue(rule.isApplicable(order, wallet, baseScenario));
     }
 
@@ -38,7 +38,7 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithPromo(cardMethodId);
         Wallet wallet = createWalletWithCard(cardMethodId);
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -56,7 +56,7 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithoutPromos();
         Wallet wallet = createWalletWithCard(cardMethodId);
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -75,7 +75,7 @@ class FullCardRuleTest {
         String cardMethodId = "card123";
         String differentCardId = "card456";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithPromo(cardMethodId);
         Wallet wallet = createWalletWithCard(differentCardId);
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -93,10 +93,10 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithPromo(cardMethodId);
         Wallet wallet = createWalletWithCard(cardMethodId);
-        
+
         // Create a base scenario that already uses a card
         CardMethod cardMethod = new CardMethod("otherCard", new BigDecimal("0.05"), new BigDecimal("500.00"));
         PaymentScenario baseScenario = new PaymentScenario(order, cardMethod, BigDecimal.ZERO, 
@@ -115,15 +115,15 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         // Order value is 100.00
         Order order = createOrderWithPromo(cardMethodId);
-        
+
         // Create a wallet with a card that has insufficient limit (50.00 < 100.00)
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod(cardMethodId, new BigDecimal("0.10"), new BigDecimal("50.00")));
         Wallet wallet = new Wallet(cardMethods, null);
-        
+
         PaymentScenario baseScenario = createBaseScenario(order);
 
         // Act
@@ -139,11 +139,11 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithPromo(cardMethodId);
         Wallet wallet = createWalletWithCard(cardMethodId);
         PaymentScenario baseScenario = createBaseScenario(order);
-        
+
         // Expected discount: 100.00 * 0.10 = 10.00
         BigDecimal expectedDiscount = new BigDecimal("10.00");
 
@@ -151,7 +151,9 @@ class FullCardRuleTest {
         BigDecimal actualDiscount = rule.computeDiscount(order, wallet, baseScenario);
 
         // Assert
-        assertEquals(expectedDiscount, actualDiscount);
+        // Use compareTo for BigDecimal comparison to ignore scale differences
+        assertEquals(0, expectedDiscount.compareTo(actualDiscount), 
+                    "Expected discount " + expectedDiscount + " but got " + actualDiscount);
     }
 
     @Test
@@ -160,7 +162,7 @@ class FullCardRuleTest {
         // Arrange
         String cardMethodId = "card123";
         FullCardRule rule = new FullCardRule(cardMethodId);
-        
+
         Order order = createOrderWithoutPromos();
         Wallet wallet = createWalletWithCard(cardMethodId);
         PaymentScenario baseScenario = createBaseScenario(order);
@@ -173,23 +175,23 @@ class FullCardRuleTest {
     }
 
     // Helper methods to create test objects
-    
+
     private Order createOrderWithPromo(String promoId) {
         Set<String> promos = new HashSet<>();
         promos.add(promoId);
         return new Order("order123", new BigDecimal("100.00"), promos);
     }
-    
+
     private Order createOrderWithoutPromos() {
         return new Order("order123", new BigDecimal("100.00"), new HashSet<>());
     }
-    
+
     private Wallet createWalletWithCard(String cardId) {
         List<CardMethod> cardMethods = new ArrayList<>();
         cardMethods.add(new CardMethod(cardId, new BigDecimal("0.10"), new BigDecimal("1000.00")));
         return new Wallet(cardMethods, null);
     }
-    
+
     private PaymentScenario createBaseScenario(Order order) {
         return new PaymentScenario(order, null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
     }
