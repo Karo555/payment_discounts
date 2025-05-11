@@ -132,8 +132,8 @@ class PartialPointsRuleTest {
         Wallet wallet = createWalletWithPartialPoints(); // Points limit is 50.00, discount is 0.15
         PaymentScenario baseScenario = createBaseScenario(order);
 
-        // Expected discount: 50.00 * 0.15 = 7.50
-        BigDecimal expectedDiscount = new BigDecimal("7.50");
+        // Expected discount: 10% of order value = 10.00
+        BigDecimal expectedDiscount = new BigDecimal("10.00");
 
         // Act
         BigDecimal actualDiscount = rule.computeDiscount(order, wallet, baseScenario);

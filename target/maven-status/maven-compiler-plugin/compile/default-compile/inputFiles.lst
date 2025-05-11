@@ -1,0 +1,17 @@
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/Main.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/mapper/OrderJsonMapper.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/mapper/PaymentMethodJsonMapper.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/order/Order.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/order/OrderProcessor.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/order/PaymentScenario.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/order/PaymentScenarioEvaluator.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/order/Wallet.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/payment/CardMethod.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/payment/PaymentMethod.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/payment/PointsMethod.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/promotion/DefaultRule.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/promotion/FullCardRule.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/promotion/FullPointsRule.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/promotion/PartialPointsRule.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/promotion/PromotionRule.java
+/Users/karolinanowacka/IdeaProjects/ocado_internship_25/src/main/java/org/example/report/SummaryReporter.java

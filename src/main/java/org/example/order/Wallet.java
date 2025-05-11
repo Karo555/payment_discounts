@@ -48,10 +48,12 @@ public class Wallet {
      * @return The list of card payment methods
      */
     public List<CardMethod> getCardMethods() {
-        return paymentMethods.stream()
+        return Collections.unmodifiableList(
+            paymentMethods.stream()
             .filter(PaymentMethod::isCard)
             .map(method -> (CardMethod) method)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList())
+        );
     }
 
     /**

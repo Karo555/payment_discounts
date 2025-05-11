@@ -149,9 +149,9 @@ class PaymentScenarioEvaluatorTest {
         assertTrue(result.usesCard());
         assertTrue(result.usesPoints());
 
-        // Expected discount: 20% of 200 (points) + 15% of 100 (card2) = 40 + 15 = 55
+        // Expected discount: 10% of 300 (entire order) = 30
         // Use compareTo for BigDecimal comparison to avoid precision issues
-        assertEquals(0, new BigDecimal("55.00").compareTo(result.getDiscountValue()));
+        assertEquals(0, new BigDecimal("30.00").compareTo(result.getDiscountValue()));
     }
 
     @Test

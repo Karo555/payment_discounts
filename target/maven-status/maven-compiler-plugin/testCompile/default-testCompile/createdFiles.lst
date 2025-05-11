@@ -1,0 +1,12 @@
+org/example/PartialPointsRuleTest.class
+org/example/PointsMethodTest.class
+org/example/PaymentScenarioEvaluatorTest.class
+org/example/SummaryReporterTest.class
+org/example/mapper/JsonMappersTest.class
+org/example/OrderTest.class
+org/example/WalletTest.class
+org/example/FullCardRuleTest.class
+org/example/CardMethodTest.class
+org/example/PaymentScenarioTest.class
+org/example/FullPointsRuleTest.class
+org/example/OrderProcessorTest.class
